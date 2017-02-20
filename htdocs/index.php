@@ -1,8 +1,5 @@
-
-<html>
-<body>
 <?php
-include 'conn.php';
+include 'header.php';
+
+include 'footer.php';
 ?>
-</body>
-</html>

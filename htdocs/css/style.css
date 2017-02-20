@@ -1,39 +1,64 @@
-body {
-
-    background-color: blue;
-}
-
-ul {
-    list-style-type: none;
+* {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+}
+
+body {
     background-color: lightblue;
+    color: #494949;
 }
 
-li {
-    float: left;
+/* Remove margins and padding from the list, and add a black background color */
+ul.topnav {
+    list-style-type: none;
+    /*margin: auto;*/
+    width: 50%;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
 }
 
-li a {
+/* Float the list items side by side */
+ul.topnav li {float: left;}
+
+/* Style the links inside the list items */
+ul.topnav li a {
     display: inline-block;
-    color: white;
+    color: #494949;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
 }
 
-li a:hover {
-    background-color: blue;
+/* Change background color of links on hover */
+ul.topnav li a:hover {
+    background-color: #CFE0E6;
 }
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.topnav li.icon {display: none;}
+
+.main {
+    margin: auto;
+    background-color: white;
+    width: 50%;
+}
+
 #login {
     margin: auto;
     margin-top: 10%;
-    width: 15%;
-    padding: 10px;
+    width: 10%;
+    padding: 15px;
     background-color: white;
 }
+
 #menu {
-    background-color: lightblue;
+    margin: auto;
+    margin-top: 100px;
+    padding-bottom: -40px;
+    background-color: white;
+    width: 70%;
 
 }

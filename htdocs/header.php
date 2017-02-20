@@ -4,10 +4,16 @@
 
 <title>TEST</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <meta charset="UTF-8">
 
 </head>
 <body>
 <?php
+include 'conn.php';
+include 'functions.php';
+header("Content-Type: text/html;charset=UTF-8");
+
+// If the login-cookie is not set, redirect to login page
 if(!isset($_COOKIE["jproj_code"])) {
     $file = $_SERVER["SCRIPT_NAME"];
     $dir = dirname($file);
@@ -19,15 +25,21 @@ if(!isset($_COOKIE["jproj_code"])) {
     } 
     //exit();
 } else {
-    echo "
-    <div id='menu'>
-    <ul>
-    <li><a href='#home'>Home</a></li>
-    <li><a href='#news'>News</a></li>
-    <li><a href='#contact'>Contact</a></li>
-    <li><a href='#about'>About</a></li>
-    </ul>
-    </div>
-";
+
+    $code = $_COOKIE["jproj_code"];
+
+    echo '
+<div id="menu">
+<ul class="topnav" id="myTopnav">
+  <li><a href="index.php">Words</a></li>
+  <li><a href="about.php">About</a></li>';
+if(getPrivilege($code, $conn) == 1) {
+    echo '<li><a href="admin.php">Admin</a></li>';
+}
+
+echo '
+</ul>
+</div>
+';
 }
 ?>

@@ -48,8 +48,12 @@ ul.topnav li.icon {display: none;}
     font-size: 60px;
 }
 
-.main #adminMain {
+.main#adminMain {
     
+}
+
+.main#aboutMain {
+    font-size: 16px !important;
 }
 
 #login {
@@ -62,11 +66,16 @@ ul.topnav li.icon {display: none;}
 
 #menu {
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     padding-bottom: 10px;
     background-color: white;
     width: 700px;
 
+}
+
+#submenu {
+    margin: auto;
+    width: 700px;
 }
 
 #arWord {

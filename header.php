@@ -33,8 +33,9 @@ if(!isset($_COOKIE["jproj_code"])) {
 <ul class="topnav" id="myTopnav">
   <li><a href="index.php">Words</a></li>
   <li><a href="about.php">About</a></li>';
+
 if(getPrivilege($code, $conn) == 1) {
-    echo '<li><a href="admin.php">Admin</a></li>';
+    echo '<li><a class="adminbtn" href="admin.php">Admin</a></li>';
 }
 
 echo '

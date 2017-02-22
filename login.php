@@ -11,6 +11,11 @@ if(empty($code)) {
     // If code is in DB -> login is true
 }
 
+// If the cookie is set -> login using cookie
+if(isset($_COOKIE["jproj_code"])) {
+    $login = checkLogin($_COOKIE["jproj_code"], $conn);
+}
+
 // If we cannot login -> display login form
 // If we can login -> set cookies and redirect to index.php
 if($login == False) {
@@ -32,11 +37,12 @@ if($login == False) {
 } else {
     // If we have login enabled, but cookie is not set -> set cookie
     if(!isset($_COOKIE["jproj_code"])) {
-        // Set one month expiry date
+        // Set ten years expiry date
         setcookie("jproj_code", $code, time() + (60 * 60 * 24 * 365 * 10));
     }
 
     // Redirects to index.php
+    $file = $_SERVER["SCRIPT_NAME"];
     $dir = dirname($file);
     $loc = 'Location: ' . $dir . '/index.php';
     header($loc);

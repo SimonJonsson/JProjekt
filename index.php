@@ -5,10 +5,10 @@ include 'header.php';
 $persWord = getRandomWord($conn);
 echo '<div class="main">';
 echo '<form method="post">';
-echo $persWord;
+echo '<p id="arWord">' . $persWord . '</p>';
 echo '<input type="hidden" name="pers" value="' . $persWord . '" />';
-echo '<input type="text" name="dabire" maxlength="40" />';
-echo '<input type="submit" value="Submit" />';
+echo '<input id="dabInput" type="text" name="dabire" maxlength="30" /><br>';
+//echo '<input type="submit" value="Submit" />';
 echo '</form>';
 echo '</div>';
 

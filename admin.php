@@ -7,18 +7,31 @@ if(getPrivilege($_COOKIE["jproj_code"], $conn) != 1) exit();
 echo '
 <div id="submenu">
 <ul class="topnav" id="myTopnav">
-  <li><a href="index.php">Users</a></li>
-  <li><a href="about.php">Report</a></li>
+  <li><a href="#" id="usrBtn">Users</a></li>
+  <li><a href="#" id="repBtn">Report</a></li>
 </ul>
 </div>';
 
+// Just a placeholder div for jQuery to load onto.
 echo '<div id="adminMain" class="main">';
-
-echo 'Admin sida';
-// Möjlighet att skriva ut en rapport. Där man kan välja TAG och kolonner. Format CSV
-// Lägga till användare
-// Ta bort användare
-
 echo '</div>';
+
 include 'footer.php'; 
 ?>
+<script type="text/javascript" >
+ $(document).ready(function() {
+     // Load user page when site is loaded fully
+     $("#adminMain").ready(function() {
+         loadPage('users','#adminMain');
+     });
+
+     $("#usrBtn").click(function() {
+         loadPage('users','#adminMain');
+     });
+
+     $("#repBtn").click(function() {
+         loadPage('report','#adminMain');
+     });
+ });
+
+</script>

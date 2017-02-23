@@ -5,6 +5,7 @@
 <title>TEST</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
       <meta charset="UTF-8">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
 <body>

@@ -41,3 +41,12 @@ function getWordId($conn, $word) {
     return $row["id"];
 }
 ?>
+
+<script type="text/javascript">
+
+// Easy function to dynamically load page. Will make things neater.
+function loadPage(page, target) {
+    $(target).load(page + ".php");
+}
+
+</script>

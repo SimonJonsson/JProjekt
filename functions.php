@@ -40,9 +40,36 @@ function getWordId($conn, $word) {
     $row = mysqli_fetch_assoc($result);
     return $row["id"];
 }
+
+//
+function addUser($conn, $code, $privilege) {
+    // If the query returns a value, the user exists
+    $sql = 'SELECT code FROM users WHERE code="' . $code;
+    $result = mysqli_query($conn, $sql);
+    //$rows = mysqli_num_rows($result);
+    if (!empty($result)) { return False; }
+
+    $sql = 'INSERT INTO users (code, privilege)
+VALUES ("' . $code . '", ' . $privilege . ')';
+    mysqli_query($conn, $sql);
+    return True;
+}
+
+function removeUser($conn, $userId) {
+    $sql = 'DELETE FROM users WHERE id=' . $userId;
+    $result = mysqli_query($conn, $sql);
+    return True;
+}
 ?>
 
 <script type="text/javascript">
+
+    // Generates 6 digit HEX number, which is used as a user code
+    function generateCode() {
+        code = Math.ceil(Math.random() * (16777215 - 1048575) + 1048576);
+        code = (code.toString(16)).toUpperCase();
+        return code;
+    }
 
 // Easy function to dynamically load page. Will make things neater.
 function loadPage(page, target) {

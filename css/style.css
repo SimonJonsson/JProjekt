@@ -9,8 +9,14 @@ body {
 }
 
 table, th, td{
+    padding: 2px;
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+th {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 
@@ -51,11 +57,11 @@ ul.topnav li.icon {display: none;}
     margin: auto;
     background-color: white;
     width: 600px;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .main#adminMain {
-    
+    font-size: 22px;
 }
 
 

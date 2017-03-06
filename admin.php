@@ -7,8 +7,8 @@ if(getPrivilege($_COOKIE["jproj_code"], $conn) != 1) exit();
 echo '
 <div id="submenu">
 <ul class="topnav" id="myTopnav">
-  <li><a href="#" id="usrBtn">Users</a></li>
-  <li><a href="#" id="repBtn">Report</a></li>
+  <li><a href="javascript:void(0);" id="usrBtn">Users</a></li>
+  <li><a href="javascript:void(0);" id="repBtn">Report</a></li>
 </ul>
 </div>';
 
@@ -25,6 +25,7 @@ include 'footer.php';
          loadPage('users','#adminMain');
      });
 
+         // Makes buttonclicks jQuery -> no ugly urls
      $("#usrBtn").click(function() {
          loadPage('users','#adminMain');
      });

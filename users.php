@@ -18,7 +18,7 @@ echo 'Privilege:
                <option selected="selected" value = "5">5</option>
              </select>
 ';
-echo '<br><input id="submitter" name="submit" type="submit" />';
+echo '<br><input id="submitter" name="submit" value="Add user" type="submit" />';
 echo '</form>';
 
 // If the POST data exists, then w want to add the user

@@ -61,7 +61,7 @@ ul.topnav li.icon {display: none;}
 }
 
 .main#adminMain {
-    font-size: 22px;
+    font-size: 22px !important;
 }
 
 
@@ -73,7 +73,7 @@ ul.topnav li.icon {display: none;}
 #login {
     margin: auto;
     margin-top: 10%;
-    width: 10%;
+    width: 175px;
     padding: 15px;
     background-color: white;
 }

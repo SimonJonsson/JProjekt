@@ -3,8 +3,9 @@
 include 'functions.php';
 include 'conn.php';
 
-$persWord = getRandomWord($conn);
 
+$persWord = getRandomWord($conn);
+//$persWord = getRandomWordUnique($conn, $_COOKIE["jproj_code"]);
 echo '<form id="wordform">';
 echo '<p id="arWord">' . $persWord . '</p>';
 echo '<input type="hidden" name="wordId" value="' . $persWord . '" />';

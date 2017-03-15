@@ -33,6 +33,12 @@ function getRandomWord($conn) {
     return $row["word"];
 }
 
+function getRandomWordUnique($conn, $code) {
+    $sql = "SELECT * FROM persianwords p, words w WHERE NOT w.wordid = p.id AND w.code =\"" . $code . "\"";
+    $hej = "SELECT * FROM persianwords p LEFT JOIN words w ON p.id = w.wordid AND NOT w.code = 'SIMONJ' WHERE w.wordid IS NULL";
+    echo $sql;
+}
+
 // Get ID of persian word
 function getWordId($conn, $word) {
     $sql = "SELECT id FROM persianwords WHERE word='" . $word . "'";

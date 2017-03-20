@@ -18,6 +18,7 @@ function checkLogin($code, $conn) {
     return $login;
 }
 
+// Fetches user privileges
 function getPrivilege($code, $conn) {
     $sql = "SELECT privilege FROM users WHERE code='" . $code . "'";
     $result = mysqli_query($conn, $sql);
@@ -25,7 +26,7 @@ function getPrivilege($code, $conn) {
     return $priv["privilege"];
 }
 
-// Fetches random persoarabic word
+// Fetches random perso-arabic word
 function getRandomWord($conn) {
     $sql = "SELECT * FROM persianwords ORDER BY rand() LIMIT 10";
     $result = mysqli_query($conn, $sql);
@@ -33,21 +34,41 @@ function getRandomWord($conn) {
     return $row["word"];
 }
 
+// Fetches a perso-arabic word, unique for the user
 function getRandomWordUnique($conn, $code) {
-    $sql = "SELECT * FROM persianwords p, words w WHERE NOT w.wordid = p.id AND w.code =\"" . $code . "\"";
-    $hej = "SELECT * FROM persianwords p LEFT JOIN words w ON p.id = w.wordid AND NOT w.code = 'SIMONJ' WHERE w.wordid IS NULL";
-    echo $sql;
+    $sql = "SELECT * FROM words WHERE code = '" . $code . "'";
+    $result = mysqli_query($conn, $sql);
+
+    // If we have already entered some words, find unique ones
+    // else we should just find a random word
+    if (mysqli_num_rows($result) > 0) {
+        // A very sub-optimal solution, proper SQL query should be made sooner or later
+        $sqlW = "SELECT * FROM persianwords WHERE id NOT IN (";
+        // Appends used id's in a list which we exempt in the sql query
+        while($row = mysqli_fetch_assoc($result)) {
+            $sqlW = $sqlW . $row["wordid"] . ",";
+        }
+
+        //substr prunes residual commas
+        $sqlW = substr($sqlW, 0, -1) . ") ORDER BY rand() LIMIT 10";
+        $resultW = mysqli_query($conn, $sqlW);
+        $row = mysqli_fetch_assoc($resultW);
+        echo $sqlW;
+        return $row["word"];
+    } else {
+        return getRandomWord($conn);
+    }
 }
 
 // Get ID of persian word
 function getWordId($conn, $word) {
-    $sql = "SELECT id FROM persianwords WHERE word='" . $word . "'";
+    $sql = "SELECT * FROM persianwords WHERE word='" . $word . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row["id"];
 }
 
-//
+// Adds a user with a code and privilege, also checks if code isn't taken
 function addUser($conn, $code, $privilege) {
     // If the query returns a value, the user exists
     $sql = 'SELECT code FROM users WHERE code="' . $code;
@@ -70,12 +91,12 @@ function removeUser($conn, $userId) {
 
 <script type="text/javascript">
 
-    // Generates 6 digit HEX number, which is used as a user code
-    function generateCode() {
-        code = Math.ceil(Math.random() * (16777215 - 1048575) + 1048576);
-        code = (code.toString(16)).toUpperCase();
-        return code;
-    }
+ // Generates 6 digit HEX number, which is used as a user code
+ function generateCode() {
+     code = Math.ceil(Math.random() * (16777215 - 1048575) + 1048576);
+     code = (code.toString(16)).toUpperCase();
+     return code;
+ }
 
 // Easy function to dynamically load page. Will make things neater.
 function loadPage(page, target) {

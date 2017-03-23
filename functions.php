@@ -91,19 +91,15 @@ function removeUser($conn, $userId) {
     return True;
 }
 ?>
-
 <script type="text/javascript">
-
  // Generates 6 digit HEX number, which is used as a user code
  function generateCode() {
      code = Math.ceil(Math.random() * (16777215 - 1048575) + 1048576);
      code = (code.toString(16)).toUpperCase();
      return code;
  }
-
 // Easy function to dynamically load page. Will make things neater.
 function loadPage(page, target) {
     $(target).load(page + ".php");
 }
-
 </script>

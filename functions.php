@@ -53,8 +53,11 @@ function getRandomWordUnique($conn, $code) {
         $sqlW = substr($sqlW, 0, -1) . ") ORDER BY rand() LIMIT 10";
         $resultW = mysqli_query($conn, $sqlW);
         $row = mysqli_fetch_assoc($resultW);
-        echo $sqlW;
-        return $row["word"];
+        if ($row["word"] == "") {
+            return False;
+        } else {
+            return $row["word"];
+        }
     } else {
         return getRandomWord($conn);
     }

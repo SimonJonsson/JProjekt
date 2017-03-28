@@ -27,7 +27,7 @@ ob_end_clean();
 echo '<li><a class="adminbtn" href="admin.php">Admin</a></li>';
 }
 ?>
-
+    <li style="float:right"><a href="logout.php">Logout</a></li>
 </ul>
 </div>
 

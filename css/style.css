@@ -24,7 +24,7 @@ th {
 ul.topnav {
     list-style-type: none;
     /*margin: auto;*/
-    width: 700px;
+    width: 800px;
     padding: 0;
     overflow: hidden;
     background-color: white;
@@ -56,15 +56,13 @@ ul.topnav li.icon {display: none;}
     padding: 50px;
     margin: auto;
     background-color: white;
-    width: 600px;
-    font-size: 40px;
+    width: 700px;
+    font-size: 35px;
 }
 
 .main#adminMain {
     font-size: 22px !important;
 }
-
-
 
 .main#aboutMain {
     font-size: 16px !important;
@@ -83,23 +81,23 @@ ul.topnav li.icon {display: none;}
     margin-top: 50px;
     padding-bottom: 10px;
     background-color: white;
-    width: 700px;
+    width: 800px;
 
 }
 
 #submenu {
     margin: auto;
-    width: 700px;
+    width: 800px;
 }
 
 #arWord {
     float:left;
-    width: 280px;
+    width: 320px;
 }
 
 #dabInput {
-    width:280px;
+    width:320px;
     height:70px;
-    font-size: 50px;
     float:right;
+    font-size:30;
 }

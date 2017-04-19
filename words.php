@@ -33,8 +33,8 @@ if ($persWord == False) {
         echo $_POST["dabire"];
         echo '<input id="dabInput" type="hidden" name="dabire" value="' . $_POST["dabire"] . '" />';
         echo '<br>';
-        echo '<a id="confirmButton" href="javascript:void(0);">Ok</a>';
-        echo '<a id="redoButton" href="javascript:void(0);">Redo</a>';
+        echo '<a id="confirmButton" href="javascript:void(0);"><img src="img/add.png" alt="Confirm" height="20" width="20" /></a>';
+        echo '<a id="redoButton" href="javascript:void(0);"><img src="img/edit.png" alt="Edit" height="20" width="20" /></a>';
         echo '</div>';
     } else {
         if ($_POST["redo"] == "True") {

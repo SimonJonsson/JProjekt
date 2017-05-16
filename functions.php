@@ -53,13 +53,51 @@ function getRandomWordUnique($conn, $code) {
         $sqlW = substr($sqlW, 0, -1) . ") ORDER BY rand() LIMIT 10";
         $resultW = mysqli_query($conn, $sqlW);
         $row = mysqli_fetch_assoc($resultW);
-        if ($row["word"] == "") {
+        if ($row["word"] == "") { // There are no words left to input
             return False;
         } else {
             return $row["word"];
         }
     } else {
         return getRandomWord($conn);
+    }
+}
+
+// If we want to retrieve words only inputted by one user
+function getRandomWordInputtedBy($conn, $byUser, $code) {
+    $sql = "SELECT * FROM words WHERE code = '" . $code . "'";
+    $result = mysqli_query($conn, $sql);
+
+    // If it's not the users first time to input a word, else give random word
+    if (mysqli_num_rows($result) > 0) {
+        $sqlW = "SELECT * FROM words w
+        INNER JOIN persianwords pw 
+        ON w.wordid = pw.id
+        WHERE w.code = '" . $byUser . "'
+        AND pw.id NOT IN (";
+        while($row = mysqli_fetch_assoc($result)) {
+            $sqlW = $sqlW . $row["wordid"] . ",";
+        }
+
+        // substr prunes residual commas
+        $sqlW = substr($sqlW, 0, -1) . ") ORDER BY rand() LIMIT 10";
+        $resultW = mysqli_query($conn, $sqlW);
+        $row = mysqli_fetch_assoc($resultW);
+        if ($row["word"] == "") {
+            return False;
+        } else {
+            return $row["word"];
+        }
+    } else {
+        $sqlW = "SELECT * FROM words w
+        INNER JOIN persianwords pw 
+        ON w.wordid = pw.id
+        WHERE w.code = '" . $byUser . "'
+        ORDER BY rand() LIMIT 10";
+        $resultW = mysqli_query($conn, $sqlW);
+        $row = mysqli_fetch_assoc($resultW);
+
+        return $row["word"];
     }
 }
 

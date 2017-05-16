@@ -2,28 +2,42 @@
 include 'conn.php';
 include 'functions.php';
 
-
-if (isset($_POST["amount"])) {
-    $amount = $_POST["amount"];
+if (!isset($_POST["create"])) {
+    echo '<button id="createButton" type="button">Create report</button>';
 } else {
-    $amount = 0;
+    echo "Report written: \"report.rkt\" on server";
 }
 
-$sql = "SELECT * FROM words w, persianwords p WHERE w.wordid = p.id";
-$result = mysqli_query($conn, $sql);
+if (isset($_POST["create"])) {
+    $sql = "SELECT * FROM words
+    LEFT JOIN persianwords ON persianwords.id = words.wordid
+    ORDER BY words.wordid ASC";
+    $result = mysqli_query($conn, $sql);
 
-echo '<table>';
-echo '<tr>';
-echo '<th>P.Arabic</th>';
-echo '<th>Dabire</th>';
-echo '</tr>';
+    $pword = "";
+    $report = fopen("report.rkt", "w") or die("Unable to open file");
 
-while($row = mysqli_fetch_assoc($result)) {
-    echo '<tr>';
-    echo '<th>' . $row["word"] . '</th>';
-    echo '<th>' . $row["dabire"] . '</th>';
-    echo '</tr>';
+    // ( (pword (list (CODE PRIVILEGE) DABIRE)))
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($row["word"] != "") {
+            if ($pword == "") {
+                $pword = $row["word"];
+                fwrite($report, "(\"" . $pword . "\" ");
+            }
+
+            if ($pword != $row["word"]) {
+                $pword = $row["word"];
+                fwrite($report, ") \n(\"" . $pword . "\" ");
+            }
+            fwrite($report, " (\"" . $row["code"] . "\" \"" . $row["dabire"] . "\")");
+        }
+    }
+    fwrite($report, "))");
+    fclose($report);
 }
-
-echo '</table>';
 ?>
+<script type="text/javascript">
+ $("#createButton").click(function(e) {
+     $("#adminMain").load('report.php', {create: "True"});
+ });
+</script>

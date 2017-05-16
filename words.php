@@ -10,12 +10,14 @@ VALUES (' . getWordId($conn, $_POST["pword"]) .
          ', "' . $_COOKIE["jproj_code"] . '")';
     mysqli_query($conn, $sql);
 }
-
+$code = $_COOKIE["jrpoj_code"];
 // If "confirm" is True then we have POSTed a word and wait for confirmation
 if ($_POST["redo"] == "True" || $_POST["confirm"] == "True") {
     $persWord = $_POST["pword"];
+} elseif (/*$code == "JALALM" || */$code == "F4AFAD") { // Jalal and F4AFAD gets new unique words
+    $persWord = getRandomWordUnique($conn, $code);
 } else {
-    $persWord = getRandomWordUnique($conn, $_COOKIE["jproj_code"]);
+    $persWord = getRandomWordInputtedBy($conn, "F4AFAD", $code);
 }
 
 // Means that there are no more words
@@ -33,7 +35,7 @@ if ($persWord == False) {
         echo $_POST["dabire"];
         echo '<input id="dabInput" type="hidden" name="dabire" value="' . $_POST["dabire"] . '" />';
         echo '<br>';
-        echo '<a id="confirmButton" href="javascript:void(0);"><img src="img/add.png" alt="Confirm" height="20" width="20" /></a>';
+        echo '<a id="confirmButton" href="javascript:void(0);"><img src="img/add.png" alt="Confirm" height="20" width="20" /></a> ';
         echo '<a id="redoButton" href="javascript:void(0);"><img src="img/edit.png" alt="Edit" height="20" width="20" /></a>';
         echo '</div>';
     } else {

@@ -14,9 +14,7 @@ with open('names.csv',  newline='', encoding='utf-8') as csvfile:
         # For each row, check if in wordList
         # not in word list -> add to wordlist and add to db
         # in word list -> ignore word
-        if (wordlist.count(row[0]) > 0):
-            print("not unique word")
-        else:
+        if (wordlist.count(row[0]) == 0):
             wordlist.append(row[0])
             sql = "INSERT INTO persianwords (word, tag) VALUES (\"" + row[0] + "\",\"" + tag + "\")"
             cursor.execute(sql)

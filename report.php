@@ -3,11 +3,11 @@ include 'conn.php';
 include 'functions.php';
 
 if (!isset($_POST["create"])) {
-    echo '<button id="createButton" type="button">Create report</button>';
+    echo '<button id="createButton" type="button">Generate New Report</button> <br>';
 } else {
-    echo "Report written: \"report.rkt\" on server";
+    echo "Report written: \"report.rkt\" on server <br>";
 }
-
+echo '<a id="fileDownload" href="report.rkt">Download report</a>';
 if (isset($_POST["create"])) {
     $sql = "SELECT * FROM words
     LEFT JOIN persianwords ON persianwords.id = words.wordid
@@ -17,7 +17,7 @@ if (isset($_POST["create"])) {
     $pword = "";
     $report = fopen("report.rkt", "w") or die("Unable to open file");
 
-    // ( (pword (list (CODE PRIVILEGE) DABIRE)))
+    // FORMAT: ( (pword ( (CODE  DABIRE) (CODE DABIRE)))
     while ($row = mysqli_fetch_assoc($result)) {
         if ($row["word"] != "") {
             if ($pword == "") {
@@ -37,7 +37,7 @@ if (isset($_POST["create"])) {
 }
 ?>
 <script type="text/javascript">
- $("#createButton").click(function(e) {
-     $("#adminMain").load('report.php', {create: "True"});
+$("#createButton").click(function(e) {
+    $("#adminMain").load('report.php', {create: "True"});
  });
 </script>

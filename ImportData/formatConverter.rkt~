@@ -1,0 +1,47 @@
+#lang racket
+(require "soxanwords-final.rkt")
+
+(define out (open-output-file "db5000test.csv" #:exists 'replace))
+(define dict (append x@ xa xb xp xte xse xj xc xhotti xx xd xzal xr xze x% xsin x$ xsad xzad xta xza xeyn xqeyn xf xqaf xk xg xl xm xn xv xhavvaz xy))
+
+
+(define new-dict (cart dict '()))
+
+(define (lst->csv lst)
+  (if (null? lst)
+      (void)
+      (begin
+        (fprintf out "~a, ~a ~n"
+                 ;(caaar lst)
+                 (if (list? (caaar lst))
+                     (string-join (map ~a (caaar lst)))
+                     (caaar lst))
+                 ;(string-join (map ~a (cadar lst)) "\u200B")) ; Breaks but no width
+                 ;(string-join (map ~a (cadar lst)) "\u2009")) ; Does not break
+                 ;(string-join (map ~a (cadar lst)) "\uFEFF")) ; Breaks but no width
+                 (string-join (map ~a (cadar lst)) "\u200A")))  ; Hair space
+        (lst->csv (cdr lst)))))
+
+(define (writer lst)
+  (if (null? lst)
+      (void)
+      (if (> (length (car lst)) 2)
+          (begin
+            (fprintf out "~a ~n" (cartesian-product (caar lst) (cdar lst)))
+            (writer (cdr lst)))
+          (writer (cdr lst)))))
+
+(define (writerp lst)
+  (if (null? lst)
+      (void)
+      (begin
+        (fprintf out "~a ~n" (car lst))
+        (writerp (cdr lst)))))
+
+(define bad-dict (filter (lambda x (> (length (car x)) 2)) dict))
+(define ok-dict (filter-not (lambda x (> (length (car x)) 2)) dict))
+;(writerp bad-dict)
+;(writerp new-dict)
+(lst->csv new-dict)
+;(writer dict)
+

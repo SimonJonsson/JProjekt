@@ -36,9 +36,19 @@ function getRandomWord($conn) {
 
 // Fetches a perso-arabic word, unique for the user
 function getRandomWordUnique($conn, $code) {
-    $sql = "SELECT * FROM words WHERE code = '" . $code . "'";
+    $sql = "SELECT * FROM persianwords p
+            LEFT JOIN words w ON w.wordid = p.id
+            WHERE w.code <> '" . $code . "'
+            ORDER BY rand() LIMIT 10";
     $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
 
+    if ($row["word"] == "") { // There are no words left to input
+        return False;
+    } else {
+        return $row["word"];
+    }
+    /*
     // If we have already entered some words, find unique ones
     // else we should just find a random word
     if (mysqli_num_rows($result) > 0) {
@@ -61,13 +71,35 @@ function getRandomWordUnique($conn, $code) {
     } else {
         return getRandomWord($conn);
     }
+    */
+}
+
+// If we want to retrieve words not input by one user
+function getRandomWordNotBy($conn, $byUser, $code) {
+    // Retrieves all persian words not inputted by $byUser and the user $code
+    $sql = 'SELECT * FROM persianwords p
+        LEFT JOIN words w ON p.id = w.wordid
+        WHERE w.code IS NULL
+        OR (w.code <> "' . $byUser . '" AND w.code <> "' . $code .'")
+        ORDER BY rand() LIMIT 10';
 }
 
 // If we want to retrieve words only inputted by one user
 function getRandomWordInputtedBy($conn, $byUser, $code) {
-    $sql = "SELECT * FROM words WHERE code = '" . $code . "'";
+    $sql = "SELECT * FROM persianwords p
+        INNER JOIN words w 
+        ON w.wordid = p.id
+        WHERE w.code = '" . $byUser . "' AND w.code <> '" . $code "'
+        ORDER BY rand() LIMIT 10";
     $result = mysqli_query($conn, $sql);
 
+    $row = mysqli_fetch_assoc($result);
+    if ($row["word"] == "") {
+        return False;
+    } else {
+        return $row["word"];
+    }
+    /*
     // If it's not the users first time to input a word, else give random word
     if (mysqli_num_rows($result) > 0) {
         $sqlW = "SELECT * FROM words w
@@ -99,6 +131,7 @@ function getRandomWordInputtedBy($conn, $byUser, $code) {
 
         return $row["word"];
     }
+    */
 }
 
 // Get ID of persian word

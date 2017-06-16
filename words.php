@@ -10,14 +10,14 @@ VALUES (' . getWordId($conn, $_POST["pword"]) .
          ', "' . $_COOKIE["jproj_code"] . '")';
     mysqli_query($conn, $sql);
 }
-$code = $_COOKIE["jrpoj_code"];
+
 // If "confirm" is True then we have POSTed a word and wait for confirmation
 if ($_POST["redo"] == "True" || $_POST["confirm"] == "True") {
     $persWord = $_POST["pword"];
-} elseif (/*$code == "JALALM" || */$code == "F4AFAD") { // Jalal and F4AFAD gets new unique words
-    $persWord = getRandomWordUnique($conn, $code);
+} elseif ($_COOKIE["jproj_code"] == "F4AFAD") { // (Jalal and) F4AFAD gets new unique words
+    $persWord = getRandomWordUnique($conn, $_COOKIE["jproj_code"]);
 } else {
-    $persWord = getRandomWordInputtedBy($conn, "F4AFAD", $code);
+    $persWord = getRandomWordInputtedBy($conn, "F4AFAD", $_COOKIE["jproj_code"]);
 }
 
 // Means that there are no more words

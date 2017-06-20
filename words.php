@@ -13,7 +13,9 @@ VALUES (' . getWordId($conn, $_POST["pword"]) .
 
 // If "confirm" is True then we have POSTed a word and wait for confirmation
 if ($_POST["redo"] == "True" || $_POST["confirm"] == "True") {
-    $persWord = $_POST["pword"];
+    $persWord = $_POST["pword"]; 
+} elseif ($_COOKIE["jproj_code"] == "SIMONJ") {
+    $persWord = getRandomWordNotBy($conn, "JALALM", $_COOKIE["jproj_code"]);
 } elseif ($_COOKIE["jproj_code"] == "F4AFAD") { // (Jalal and) F4AFAD gets new unique words
     $persWord = getRandomWordUnique($conn, $_COOKIE["jproj_code"]);
 } else {

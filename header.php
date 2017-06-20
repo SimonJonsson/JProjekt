@@ -1,7 +1,5 @@
 <?php
 ob_start();
-
-setcookie("jproj_code", "F4AFAD", time() + (60 * 60 * 24 * 365 * 10));
 //exit();
 include 'conn.php';
 include 'functions.php';

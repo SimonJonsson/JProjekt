@@ -1,6 +1,7 @@
 <?php
 
-// used to verify userlogin
+// Used to verify userlogin
+// Confirms that the user is in db
 function checkLogin($code, $conn) {
     $login = False;
     $sql = "SELECT * FROM users";
@@ -48,51 +49,35 @@ function getRandomWordUnique($conn, $code) {
     } else {
         return $row["word"];
     }
-    /*
-    // If we have already entered some words, find unique ones
-    // else we should just find a random word
-    if (mysqli_num_rows($result) > 0) {
-        // A very sub-optimal solution, proper SQL query should be made sooner or later
-        $sqlW = "SELECT * FROM persianwords WHERE id NOT IN (";
-        // Appends used id's in a list which we exempt in the sql query
-        while($row = mysqli_fetch_assoc($result)) {
-            $sqlW = $sqlW . $row["wordid"] . ",";
-        }
-
-        //substr prunes residual commas
-        $sqlW = substr($sqlW, 0, -1) . ") ORDER BY rand() LIMIT 10";
-        $resultW = mysqli_query($conn, $sqlW);
-        $row = mysqli_fetch_assoc($resultW);
-        if ($row["word"] == "") { // There are no words left to input
-            return False;
-        } else {
-            return $row["word"];
-        }
-    } else {
-        return getRandomWord($conn);
-    }
-    */
 }
 
 // If we want to retrieve words not input by one user
 function getRandomWordNotBy($conn, $byUser, $code) {
     // Retrieves all persian words not inputted by $byUser and the user $code
-    $sql = 'SELECT * FROM persianwords p
-        LEFT JOIN words w ON p.id = w.wordid
-        WHERE w.code IS NULL
-        OR (w.code <> "' . $byUser . '" AND w.code <> "' . $code .'")
-        ORDER BY rand() LIMIT 10';
+    $sql = 'SELECT * 
+            FROM persianwords p 
+            WHERE p.id NOT IN 
+                 (SELECT wordid
+                  FROM words w
+                  WHERE (w.code = "' . $byUser . '" OR w.code = "' . $code . '"))
+            ORDER BY rand() LIMIT 10';
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    if ($row["word"] == "") {
+        return False;
+    } else {
+        return $row["word"];
+    }
 }
 
 // If we want to retrieve words only inputted by one user
 function getRandomWordInputtedBy($conn, $byUser, $code) {
     $sql = "SELECT * FROM persianwords p
-        INNER JOIN words w 
-        ON w.wordid = p.id
-        WHERE w.code = '" . $byUser . "' AND w.code <> '" . $code "'
-        ORDER BY rand() LIMIT 10";
+            INNER JOIN words w 
+            ON w.wordid = p.id
+            WHERE w.code = '" . $byUser . "' 
+            ORDER BY rand() LIMIT 10";
     $result = mysqli_query($conn, $sql);
-
     $row = mysqli_fetch_assoc($result);
     if ($row["word"] == "") {
         return False;
@@ -139,6 +124,7 @@ function getWordId($conn, $word) {
     $sql = "SELECT * FROM persianwords WHERE word='" . $word . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+    echo $sql . "<br>" . "Word: " . $word . "<br>" . "id: " . $row["id"];
     return $row["id"];
 }
 
@@ -151,11 +137,12 @@ function addUser($conn, $code, $privilege) {
     if (!empty($result)) { return False; }
 
     $sql = 'INSERT INTO users (code, privilege)
-VALUES ("' . $code . '", ' . $privilege . ')';
+            VALUES ("' . $code . '", ' . $privilege . ')';
     mysqli_query($conn, $sql);
     return True;
 }
 
+// Removes user
 function removeUser($conn, $userId) {
     $sql = 'DELETE FROM users WHERE id=' . $userId;
     $result = mysqli_query($conn, $sql);

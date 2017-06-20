@@ -1,11 +1,15 @@
 <?php
-ob_start();
-//exit();
-include 'conn.php';
-include 'functions.php';
-include 'loginChecker.php';
-ob_flush();
-ob_end_clean();
+$maintenance = True;
+if ($maintenance == True) {
+    header('Location: /maintenance.php');
+} else {
+    ob_start();
+    include 'conn.php';
+    include 'functions.php';
+    include 'loginChecker.php';
+    ob_flush();
+    ob_end_clean();
+}
 ?>
 <!DOCTYPE html>
 <html>

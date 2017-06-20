@@ -91,7 +91,6 @@ function getWordId($conn, $word) {
     $sql = "SELECT * FROM persianwords WHERE word='" . $word . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    echo $sql . "<br>" . "Word: " . $word . "<br>" . "id: " . $row["id"];
     return $row["id"];
 }
 

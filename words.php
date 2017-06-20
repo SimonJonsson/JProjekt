@@ -12,12 +12,11 @@ VALUES (' . getWordId($conn, $_POST["pword"]) .
 }
 
 // If "confirm" is True then we have POSTed a word and wait for confirmation
+// Some special behaviour for certain users
 if ($_POST["redo"] == "True" || $_POST["confirm"] == "True") {
     $persWord = $_POST["pword"]; 
-} elseif ($_COOKIE["jproj_code"] == "SIMONJ") {
+} elseif ($_COOKIE["jproj_code"] == "F4AFAD") {
     $persWord = getRandomWordNotBy($conn, "JALALM", $_COOKIE["jproj_code"]);
-} elseif ($_COOKIE["jproj_code"] == "F4AFAD") { // (Jalal and) F4AFAD gets new unique words
-    $persWord = getRandomWordUnique($conn, $_COOKIE["jproj_code"]);
 } else {
     $persWord = getRandomWordInputtedBy($conn, "F4AFAD", $_COOKIE["jproj_code"]);
 }

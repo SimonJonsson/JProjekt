@@ -68,6 +68,14 @@ ul.topnav li.icon {display: none;}
     font-size: 16px !important;
 }
 
+#maintenance {
+    margin: auto;
+    margin-top: 10%;
+    width: 200px;
+    padding: 15px;
+    background-color: white;
+}
+
 #login {
     margin: auto;
     margin-top: 10%;

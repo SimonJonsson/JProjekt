@@ -91,7 +91,11 @@ function getWordId($conn, $word) {
     $sql = "SELECT * FROM persianwords WHERE word='" . $word . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    return $row["id"];
+    if ($row["id"] == "") {
+        return False;
+    } else {
+        return $row["id"];
+    }
 }
 
 // Adds a user with a code and privilege, also checks if code isn't taken

@@ -1,8 +1,10 @@
 <?php
+
 $servername = "localhost";
 $username = "root";
 $password = "mysql";
 $dbname = "jproj";
+
 
 /*
 $servername = "textmine.se.mysql";
@@ -12,12 +14,18 @@ $dbname = "textmine_se";
 */
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$maintenance = False;
+if (!$maintenance) {
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-$conn->set_charset("utf8");
+    $conn->set_charset("utf8");
 
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    // Check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+} else {
+    echo "Maintenance. Reload page.";
+    exit();
 }
 ?>

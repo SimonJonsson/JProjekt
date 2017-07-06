@@ -1,6 +1,6 @@
 <?php
-$maintenance = True;
-if ($maintenance == True) {
+$maintenance = False;
+if ($maintenance) {
     header('Location: /maintenance.php');
 } else {
     ob_start();
@@ -26,13 +26,15 @@ if ($maintenance == True) {
     <ul class="topnav" id="myTopnav">
     <li><a href="index.php">Words</a></li>
     <li><a href="about.php">About</a></li>
-<?php
+    <?php
     // If we have admin privileges, show tab
     if(getPrivilege($_COOKIE["jproj_code"], $conn) == 1) {
-echo '<li><a class="adminbtn" href="admin.php">Admin</a></li>';
-}
-?>
-    <li style="float:right"><a href="logout.php">Logout</a></li>
+        echo '<li><a class="adminbtn" href="admin.php">Admin</a></li>';
+    }
+    echo '<li style="float:right"><a href="logout.php">Logout</a></li>';
+    // A bit ugly but does the work
+    echo '<li style="float:right;display:inline-block;font-size:17px;padding: 14px 16px;">' . $_COOKIE["jproj_code"] . '</li>';
+    ?>
 </ul>
 </div>
 

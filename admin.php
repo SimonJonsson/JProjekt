@@ -9,6 +9,7 @@ echo '
 <ul class="topnav" id="myTopnav">
   <li><a href="javascript:void(0);" id="usrBtn">Users</a></li>
   <li><a href="javascript:void(0);" id="repBtn">Report</a></li>
+  <li><a href="javascript:void(0);" id="updateBtn">Update</a></li>
 </ul>
 </div>';
 
@@ -32,6 +33,10 @@ include 'footer.php';
 
      $("#repBtn").click(function() {
          loadPage('report','#adminMain');
+     });
+
+     $("#updateBtn").click(function() {
+         loadPage('update','#adminMain');
      });
  });
 

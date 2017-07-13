@@ -3,16 +3,18 @@ include 'conn.php';
 include 'functions.php';
 
 if(isset($_POST["words"])){
+    $count = 0;
     foreach($_POST["words"] as $row) {
         if(getWordId($conn, $row) == False) {
-            $count = $count + 1;
 
             $sql = "INSERT INTO persianwords (word,tag,source)
                     VALUES ('" . $row ."','undef','crawler" . $_POST["pushv"] . "')";
             mysqli_query($conn, $sql);
+        } else {
+            $count = $count + 1;
         }
     }
-    //echo "words: " . $count;
+    echo "False words: " . $count;
 }
 if(isset($_POST["pushno"])) {
     $sql = "INSERT INTO pushes (pushno, date)

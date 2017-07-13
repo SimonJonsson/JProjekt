@@ -1,7 +1,9 @@
 <?php
 include 'conn.php';
 include 'functions.php';
+//header("Access-Control-Allow-Origin: http://dabirescript.appspot.com/getlatestpushno");
 
+header("Access-Control-Allow-Origin: http://dabirescript.appspot.com");
 $sql = "SELECT * FROM pushes ORDER BY pushno desc";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
@@ -51,18 +53,20 @@ echo '<br><p id="loadDummy" />'
                 // Since we can only send a chunk of 1000 at a time, we have to divide the payload
                 var arr = result.words;
                 var totalchunks = Math.ceil(arr.length/1000);
-                $("#loadDummy").text("Processing data...");
+                $("#loadDummy").text("Processing data... (Done: 0/" + totalchunks + ")");
 
                 done = 0;
                 for (chunk = 1; chunk <= totalchunks; chunk++){
                     wordChunk = arr.slice(1000*(chunk-1),1000*chunk);
                     $.ajax({
                      type: "POST",
-                     url: "updateHandle.php", 
+                     url: "updateHandle.php",
+                     //async: false,
                      data: {words: wordChunk, pushv: getpush},
                      success: function() {
-                         console.log('Items added');
+                         console.log('Items added, push: ' + getpush);
                          done++;
+                         $("#loadDummy").text("Processing data... (Done: " + done + "/" + totalchunks + ")");
                          if (done == totalchunks) {
                              $.ajax({
                               type: "POST",

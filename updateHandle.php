@@ -16,11 +16,13 @@ if(isset($_POST["words"])){
     }
     echo "False words: " . $count;
 }
+
 if(isset($_POST["pushno"])) {
     $sql = "INSERT INTO pushes (pushno, date)
             VALUES (". $_POST["pushno"] .", CURDATE())";
     mysqli_query($conn, $sql);
-    //echo "Pushed: " . $_POST["pushno"];
+    echo "Pushed: " . $_POST["pushno"];
 }
+
 $conn->close();
 ?>

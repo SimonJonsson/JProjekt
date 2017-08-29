@@ -2,7 +2,7 @@ import csv
 import sys
 import pymysql
 
-db = pymysql.connect(host='localhost',port=3306,user='root', passwd='mysql', db='jproj',  use_unicode=True, charset="utf8")
+db = pymysql.connect(host='localhost',port=3306,user='root', passwd='root', db='jproj',  use_unicode=True, charset="utf8")
 
 cursor = db.cursor()
 

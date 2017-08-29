@@ -57,15 +57,20 @@ if (mysqli_num_rows($result) > 0) {
     echo '<th>id</th>';
     echo '<th>Code</th>';
     echo '<th>Privilege</th>';
+    echo '<th>Count</th>';
     echo '<th>Remove</th>';
     echo '</tr>';
 
     // Fetches each user and puts it in table row
     while ($row = mysqli_fetch_assoc($result)) {
+        $sqlC = "SELECT count(*) c FROM words WHERE code='" . $row["code"] . "'";
+        $resultC = mysqli_query($conn, $sqlC);
+        $wordcount = mysqli_fetch_assoc($resultC);
         echo '<tr>';
         echo '<th>' . $row["id"] . '</th>';
         echo '<th>' . $row["code"] . '</th>';
         echo '<th>' . $row["privilege"] . '</th>';
+        echo '<th>' . $wordcount["c"] . '</th>';
         // Remove user button
         echo '<th><a class="removebtn" data-index="' . $row["id"] . '" href="javascript:void(0);" style="color:red; text-decoration:none;">X</a></th>';
         echo '</tr>';

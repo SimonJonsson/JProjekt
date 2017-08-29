@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "mysql";
+$password = "root";
 $dbname = "jproj";
 
 

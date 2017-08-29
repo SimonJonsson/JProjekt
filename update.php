@@ -75,6 +75,7 @@ echo '<br><p id="loadDummy" />'
                               url: "updateHandle.php",
                               data: {pushno: getPush},
                               success: function() {
+                                  console.log("Added pushes");
                                   $("#loadDummy").text("Done");
                                   $("#pushvdb").text(getPush);
                               }

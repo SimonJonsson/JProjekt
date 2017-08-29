@@ -86,6 +86,25 @@ function getRandomWordInputtedBy($conn, $byUser, $code) {
     }
 }
 
+function getRandomWordBySource($conn, $source , $code) {
+    $sql = 'SELECT * 
+        FROM persianwords p 
+        WHERE p.id NOT IN 
+        (SELECT wordid
+         FROM words w
+         WHERE w.code = "' . $code . '")
+        AND p.source = "' . $source . '"
+        ORDER BY rand() LIMIT 10';
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row["word"] == "") {
+        return False;
+    } else {
+        return $row["word"];
+    }
+}
+
 // Get ID of persian word
 function getWordId($conn, $word) {
     $sql = "SELECT * FROM persianwords WHERE word='" . $word . "'";

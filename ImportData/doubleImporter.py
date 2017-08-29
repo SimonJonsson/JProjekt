@@ -5,7 +5,7 @@ import pymysql
 
 wordlist = []
 tag = "ordbok"
-db = pymysql.connect(host='localhost',port=3306,user='root', passwd='mysql', db='jproj',  use_unicode=True, charset="utf8")
+db = pymysql.connect(host='localhost',port=3306,user='root', passwd='root', db='jproj',  use_unicode=True, charset="utf8")
 #db = pymysql.connect(host='textmine.se.mysql',port=3306,user='textmine_se', passwd='Y5NZ28CJ', db='textmine_se',  use_unicode=True, charset="utf8")
 cursor = db.cursor()
 

@@ -15,6 +15,8 @@ if(isset($_POST["words"])){
         }
     }
     echo "False words: " . $count;
+    $conn->close();
+    exit();
 }
 
 if(isset($_POST["pushno"])) {
@@ -22,6 +24,8 @@ if(isset($_POST["pushno"])) {
             VALUES (". $_POST["pushno"] .", CURDATE())";
     mysqli_query($conn, $sql);
     echo "Pushed: " . $_POST["pushno"];
+} else {
+    echo $_POST["pushno"];
 }
 
 $conn->close();

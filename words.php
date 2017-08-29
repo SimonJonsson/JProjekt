@@ -18,11 +18,10 @@ if ($_POST["redo"] == "True" || $_POST["confirm"] == "True") {
 } elseif ($_COOKIE["jproj_code"] == "F4AFAD") {
     $persWord = getRandomWordNotBy($conn, "JALALM", $_COOKIE["jproj_code"]);
 } else {
-    $persWord = getRandomWordInputtedBy($conn, "F4AFAD", $_COOKIE["jproj_code"]);
+    $persWord = getRandomWordNotBy($conn, "JALALM", $_COOKIE["jproj_code"]);
 }
 
-// Means that there are no more words
-if ($persWord == False) {
+if ($persWord == False) { // Means that there are no more words
     echo '<p>No words left</p>';
 } else {
     echo '<form id="wordForm">';
